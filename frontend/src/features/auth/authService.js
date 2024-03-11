@@ -7,6 +7,7 @@ const LOGIN_URL = `${BACKEND_DOMAIN}/api/v1/auth/jwt/create/`;
 const ACTIVATE_URL = `${BACKEND_DOMAIN}/api/v1/auth/users/activation/`;
 const RESET_PASSWORD_URL = `${BACKEND_DOMAIN}/api/v1/auth/users/reset_password/`;
 const RESET_PASSWORD_CONFIRM_URL = `${BACKEND_DOMAIN}/api/v1/auth/users/reset_password_confirm/`;
+const GET_USER_INFO = `${BACKEND_DOMAIN}/api/v1/auth/users/me/`;
 
 //register user
 const register = async (userData) => {
@@ -15,9 +16,50 @@ const register = async (userData) => {
       "Content-type": "application/json",
     },
   };
+
   const response = await axios.post(REGISTER_URL, userData, config);
+
   return response.data;
 };
-const authService = { register };
+const activate = async (userData) => {
+  const config = {
+    headers: {
+      "Content-type": "application/json",
+    },
+  };
+
+  const response = await axios.post(ACTIVATE_URL, userData, config);
+
+  return response.data;
+};
+
+//reset password
+const resetPassword = async (userData) => {
+  const config = {
+    headers: {
+      "Content-type": "application/json",
+    },
+  };
+
+  const response = await axios.post(RESET_PASSWORD_URL, userData, config);
+
+  return response.data;
+};
+const resetPasswordConfirm = async (userData) => {
+  const config = {
+    headers: {
+      "Content-type": "application/json",
+    },
+  };
+
+  const response = await axios.post(
+    RESET_PASSWORD_CONFIRM_URL,
+    userData,
+    config,
+  );
+
+  return response.data;
+};
+const authService = { register, activate, resetPassword, resetPasswordConfirm };
 
 export default authService;

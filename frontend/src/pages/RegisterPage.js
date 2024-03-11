@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import "../index.css";
 import { Link } from "react-router-dom";
 import { CiUser } from "react-icons/ci";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { register } from "../features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
+import { Oval } from "react-loader-spinner";
+import Spinner from "../components/spinner";
 
 function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -46,18 +47,17 @@ function RegisterPage() {
       dispatch(register(userData));
     }
   };
-
   useEffect(() => {
-    if (isError) {
-      toast(message);
-    }
     if (isSuccess || user) {
       navigate("/");
-      toast(
+      toast.success(
         "An activation email has been sent to your email. Please check your email",
       );
     }
-  });
+    if (isError) {
+      toast.error(message);
+    }
+  }, [isError, isSuccess, user, navigate, dispatch]);
 
   return (
     <>
@@ -67,6 +67,7 @@ function RegisterPage() {
           <CiUser />
         </h1>
 
+        {isLoading && <Spinner />}
         <form className="auth__form">
           <input
             type="text"
