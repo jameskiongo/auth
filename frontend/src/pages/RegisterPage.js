@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { CiUser } from "react-icons/ci";
 import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import { register } from "../features/auth/authSlice";
+import { register, reset } from "../features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
 import { Oval } from "react-loader-spinner";
 import Spinner from "../components/spinner";
@@ -57,6 +57,7 @@ function RegisterPage() {
     if (isError) {
       toast.error(message);
     }
+    dispatch(reset());
   }, [isError, isSuccess, user, navigate, dispatch]);
 
   return (

@@ -21,6 +21,29 @@ const register = async (userData) => {
 
   return response.data;
 };
+
+//login
+const login = async (userData) => {
+  const config = {
+    headers: {
+      "Content-type": "application/json",
+    },
+  };
+
+  const response = await axios.post(LOGIN_URL, userData, config);
+  if (response.data) {
+    localStorage.setItem("user", JSON.stringify(response.data));
+  }
+
+  return response.data;
+};
+
+//logout
+const logout = () => {
+  return localStorage.removeItem("user");
+};
+
+//activate
 const activate = async (userData) => {
   const config = {
     headers: {
@@ -60,6 +83,25 @@ const resetPasswordConfirm = async (userData) => {
 
   return response.data;
 };
-const authService = { register, activate, resetPassword, resetPasswordConfirm };
+const getUserInfo = async (accessToken) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  };
+
+  const response = await axios.get(GET_USER_INFO, config);
+
+  return response.data;
+};
+const authService = {
+  register,
+  activate,
+  resetPassword,
+  resetPasswordConfirm,
+  getUserInfo,
+  login,
+  logout,
+};
 
 export default authService;

@@ -6,6 +6,7 @@ import Nav from "./components/navigation/Nav";
 import ActivatePage from "./pages/ActivatePage";
 import ResetPasswordPage from "./pages/ResetPassword";
 import ResetPasswordConfirm from "./pages/ResetPasswordConfirm";
+import ProtectRoutes from "./utils/ProtectRoutes";
 import { Toaster } from "react-hot-toast";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NotFound from "./pages/NotFound";
@@ -18,7 +19,14 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectRoutes>
+                <Dashboard />
+              </ProtectRoutes>
+            }
+          />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/activate/:uid/:token" element={<ActivatePage />} />
           <Route path="/reset-password" element={<ResetPasswordPage />} />
